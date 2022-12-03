@@ -1,0 +1,77 @@
+---
+title: "RLadies in the NHS"
+subtitle: "A celebration of the work they do"
+from: markdown+emoji
+format:
+  revealjs: 
+    template-partials: 
+    - title-slide.html
+    transition: none
+    slide-number: false
+    preview-links: auto
+    theme: nhsrladies.scss
+    footer: |
+        Built for the [NHS-R Community](https://nhsrcommunity.com/) by [Cara Thompson](https://cararthompson.com)
+lightbox: auto
+auto-animate: true
+embed-resources: true
+---
+
+# RLadies in the NHS {background-color="#000000"}
+
+Celebrating them and the work they do
+
+```{r}
+knitr::opts_chunk$set(dev = "ragg_png",
+                      echo=FALSE)
+
+library(tidyverse)
+nhsrl_data <- read.csv("data/tidy-data.csv", skip = 1)
+```
+
+
+```{r, results='asis'}
+names <- nhsrl_data$my_name
+
+ map(names, function(name_to_filter) {
+   
+   # To separate the slides (normal approach broken by starting slide with columns)
+   cat("## One slide {visibility=\"hidden\"}")
+   
+    knitr::knit_expand("slide-content.Rmd",
+                       name = name_to_filter)
+  }) %>%
+    unlist() %>%
+    knitr::knit_child(text = ., quiet = TRUE) %>%
+    unlist() %>%
+    cat(., sep = '
+        
+## One slide {visibility=\"hidden\"}')
+
+```
+
+
+# Separator slide {visibility="hidden"}
+
+
+# {background-color="#FFFFFF"}
+
+::: {.columns}
+::: {.column width=55%}
+
+:::
+
+::: {.column width=13%}
+
+::: 
+::: {.column width=32%}
+
+<center>
+![](images/R-LadiesGlobal.png){width=75%}
+
+![](images/nhsr-logo.jpg){width=75%}
+</center>
+
+:::
+
+:::

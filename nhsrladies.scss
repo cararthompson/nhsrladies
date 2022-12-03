@@ -1,0 +1,82 @@
+/*-- scss:defaults --*/
+// fonts
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono&display=swap');
+
+
+// override root variables
+:root {
+--r-link-color: #bdbec2;
+}
+
+// 
+$font-family-sans-serif: "Nunito", Palatino, FreeSerif, serif !default;
+$font-family-monospace: "DM Mono", monospace !default;
+
+  // headings
+$presentation-heading-font: "Zilla Slab", "Book Antiqua", Palatino, FreeSerif, serif !default;
+$presentation-heading-color: #574997 !default;
+
+// other variables
+$body-bg: #ffffff;
+/* monochromeR::generate_palette("#574997", "go_darker", n_colours = 2) */
+$body-color: #403E4A;
+$highlight-color: #574997;
+/* sets color of controls as well as links*/
+$link-color: #bdbec2;
+$presentation-font-size-root: 14pt;
+/*  monochromeR::generate_palette("#574997", "go_lighter", n_colours = 2) */
+$selection-bg: #9A91C0;
+
+/*-- scss:rules --*/
+
+
+.reveal h2 {
+  font-size: 36pt;
+  padding-bottom: 0;
+}
+
+.reveal h3 {
+  color: #403E4A;
+/*  font-size: 20pt; */
+  padding-bottom: 0;
+}
+
+.reveal .footer {
+  color: #bdbec2;
+}
+
+.reveal .progress {
+  background: $presentation-heading-color;
+  color: $highlight-color
+}
+
+/*Override the "link colour" for actual links*/
+.reveal a {
+  color:  #DDDAEA;
+}
+
+.reveal a:hover {
+  color: #FFFFFF;
+}
+
+.reveal .footer a {
+  color: #DDDAEA;
+}
+
+.reveal .footer a:hover {
+  color:  #FFFFFF;
+}
+
+.reveal .slide-background-content{
+  background: linear-gradient(90deg, #FFFFFF 59.4%, #574997 40.6%);
+}
+
+.reveal .title-slide .slide-background-content {
+  background: linear-gradient(90deg, #1D90A1 59.4%, #FFFFFF 40.6%);
+}
+
+h3.light{
+  color: #DDDAEA;
+}

@@ -1,0 +1,152 @@
+
+# Separator slide {visibility="hidden"}
+
+```{r}
+
+filtered_data <- filter(nhsrl_data, my_name == glue::glue("{{name}}"))
+
+```
+
+## Another slide {.hidden}
+
+::: {.columns}
+::: {.column width=55%}
+
+::: {.columns}
+::: {.column width=75%}
+
+## {{name}}
+
+`r paste0(ifelse(filtered_data$twitter != "", filtered_data$twitter, "<br>"), ifelse(filtered_data$mastodon != "", paste0(" | ", filtered_data$mastodon), ""))`
+
+:::
+
+::: {.column width=25%}
+
+```{r, echo=FALSE, results='asis'}
+profile_link <- case_when(filtered_data$profile_pic != "" ~ filtered_data$profile_pic,
+                          TRUE ~ "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png")
+
+cat("
+<center>    
+![](", glue::glue(profile_link), "){width=80%}
+</center>", sep = "")
+
+```
+
+:::
+:::
+
+### I use R in the NHS to...
+
+`r filtered_data$sentence`
+
+::: {.columns}
+::: {.column width=33%}
+
+### I use R for... 
+
+```{r, fig.height=3, fig.width=3}
+
+filtered_data %>%
+  ggplot() +
+  geom_bar(aes(x = 0,
+               y = 100),
+           stat = "identity",
+           fill = "#BBB6D5") +
+  geom_bar(aes(x = 0, y = percent_max),
+           fill = "#1D90A1",
+           stat = "identity") +
+  geom_bar(aes(x = 0, y = percent_min),
+           fill = "#BBB6D5",
+           stat = "identity",
+           alpha = 0.5) +
+  coord_polar(theta = "y") +
+  ggtext::geom_textbox(aes(x = -3, y = 0,
+                       label = paste0(percent,
+                                      "<span style='font-family:Nunito Sans;font-size:16pt'><br>of my work</span>")),
+                       hjust = 0.5, vjust = 0.5,
+                       halign = 0.5,
+                       family = "Zilla Slab", size = 11,
+                       box.colour = NA, fill = NA,
+                       colour = "#1D90A1") +
+  theme_void() +
+  xlim(c(-3, 0.5))
+
+```
+
+:::
+
+::: {.column width=66%}
+
+### ... and have been using R for...
+
+```{r, fig.height=2.5, fig.width=5}
+nhsrl_data %>%
+  ggplot() +
+  geom_bar(aes(x = my_name,
+               y = years_tidy),
+           stat = "identity",
+           fill = "#BBB6D5") +
+  geom_bar(data = filtered_data,
+           aes(x = my_name,
+               y = years_tidy),
+           stat = "identity",
+           fill = "#1D90A1") +
+  coord_flip() +
+  ggtext::geom_textbox(data = filtered_data, 
+                       aes(x = my_name, y = years_tidy,
+                       label = paste0(years_tidy,
+                                      " <span style='font-family:Nunito Sans;font-size:14pt'>years</span>"),
+                       hjust = case_when(years_tidy < 3 ~ 0, TRUE ~ 1),
+                             halign = case_when(years_tidy < 3 ~ 0, TRUE ~ 1),
+                             colour = case_when(years_tidy < 3 ~ "#1D90A1", TRUE ~ "#FFFFFF")),
+                       family = "Zilla Slab", size = 10,
+                       box.colour = NA, fill = NA) +
+  scale_colour_identity() +
+  theme_void()
+```
+
+:::
+
+:::
+
+### If your work or the work of your team suddenly ceased tomorrow, what would be the consequences for the NHS?
+
+`r filtered_data$consequences`
+
+::: 
+::: {.column width=13%}
+
+::: 
+::: {.column width=32%}
+<div style='color:#FFFFFF'>
+
+### What first drew you to R? {.light}
+
+`r filtered_data$first_drew`
+
+<br>
+
+### What other tools do you use? {.light}
+
+`r filtered_data$tools`
+
+<br>
+
+
+### What resources would you recommend to other R users? {.light}
+
+`r filtered_data$resources`
+
+<br>
+
+
+### Tell me something surprising about yourself! {.light}
+
+`r filtered_data$surprise`
+
+</div>
+:::
+:::
+
